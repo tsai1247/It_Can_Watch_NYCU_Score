@@ -5,12 +5,12 @@
 
 ## 使用方式
 1. 先開啟VPN或使用學校網路
-2. 寫好.env
-3.  ```
+2. ```
     git clone https://github.com/tsai1247/It_Can_Watch_NYCU_Score.git
     cd It_Can_Watch_NYCU_Score
     pip install -r requirement.txt
-    python GUI.py
-    ```
+   ```
+3. 寫好.env
+4. `python GUI.py`
 
 
