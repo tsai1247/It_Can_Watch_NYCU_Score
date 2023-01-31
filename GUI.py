@@ -1,4 +1,6 @@
-import sys
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import threading
 from time import sleep
 import tkinter as tk
