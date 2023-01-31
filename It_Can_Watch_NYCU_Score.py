@@ -39,7 +39,10 @@ def getScores(messageLabel: tk.Label = None):
 
     load_dotenv()
     account, password = getenv('account'), getenv('password')
-    if(not account.isdecimal()):
+    if account is None or password is None:
+        log(f'請先填寫.env\n')
+        return None
+    elif(not account.isdecimal()):
         log(f'學號 {account} 並非正確的陽明交通大學學號\n')
         return None
     elif len(account) == 7:

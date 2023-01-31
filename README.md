@@ -8,7 +8,7 @@
 git clone https://github.com/tsai1247/It_Can_Watch_NYCU_Score.git
 cd It_Can_Watch_NYCU_Score
 pip install -r requirement.txt
-./GUI.py
+python GUI.py
 ```
 
 
