@@ -13,14 +13,15 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException
 
 from typing import List, Tuple
-from dotenv import load_dotenv
-from os import getenv
 import tkinter as tk
 
 def endYear():
     time = datetime.now()
     return time.year - 1911 - 1 + (time.month+4) //6 //2
 
+def getLoginInfomation():
+    data = open('account', 'r', encoding='utf-8').readlines()
+    return data[0].strip(), data[1].strip()
 
 def getScores(messageLabel: tk.Label = None):
     def find_element(by: str = By.ID, value: Tuple[str, None] = None, timeout: float = 10) -> WebElement:
@@ -37,8 +38,7 @@ def getScores(messageLabel: tk.Label = None):
         if messageLabel is not None:
             messageLabel.config(text = messageLabel.cget('text') + text)
 
-    load_dotenv()
-    account, password = getenv('account'), getenv('password')
+    account, password = getLoginInfomation()
     if account is None or password is None:
         log(f'請先填寫.env\n')
         return None
@@ -82,6 +82,7 @@ def getScores(messageLabel: tk.Label = None):
         find_element(By.XPATH, '//a[text()="校園單一入口"]', 5)
     except TimeoutException:
         log('學號或密碼錯誤\n')
+        open('account', 'w').write('')
         return None
     
     log('完成\n')
