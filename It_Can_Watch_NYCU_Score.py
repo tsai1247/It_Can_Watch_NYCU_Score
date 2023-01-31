@@ -79,10 +79,11 @@ def getScores(messageLabel: tk.Label = None):
     find_element(By.CLASS_NAME, 'login').click()
     
     try:
-        find_element(By.XPATH, '//a[text()="校園單一入口"]')
+        find_element(By.XPATH, '//a[text()="校園單一入口"]', 5)
     except TimeoutException:
         log('學號或密碼錯誤\n')
-
+        return None
+    
     log('完成\n')
     sleep(0.2)
 
