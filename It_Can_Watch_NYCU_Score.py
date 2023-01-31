@@ -53,8 +53,14 @@ def getScores(messageLabel: tk.Label = None):
         log(f'學號 {account} 並非正確的陽明交通大學學號\n')
         return None
 
-    chromedriver_autoinstaller.install()
+    log('安裝最新版的chrome driver... ')
+    try:
+        chromedriver_autoinstaller.install()
+    except:
+        log('網路錯誤，請檢查網路連線\n')
+        return None
 
+    log('完成\n')
     chrome_options = Options()
     chrome_options.headless = True
     chrome_options.add_argument('log-level=2')
@@ -82,14 +88,15 @@ def getScores(messageLabel: tk.Label = None):
 
     log('進入學籍成績系統... \n')
     driver.get(f'https://portal.nycu.edu.tw/#/redirect/regist')
-    find_element(By.ID, 'objTopMenu_lbnToGrd')
-    driver.get(f'https://regist.nycu.edu.tw/p_student/grd_stdscoreedit.aspx')
-
     try:
-        tbodys = find_elements(By.XPATH, '//table[@class="table" and @border="1"]', timeout=5)
+        find_element(By.ID, 'objTopMenu_lbnToGrd', 5)
     except TimeoutException:
         log(f'無成績資料。請確認是否開啟VPN\n')
         return None
+
+    driver.get(f'https://regist.nycu.edu.tw/p_student/grd_stdscoreedit.aspx')
+
+    tbodys = find_elements(By.XPATH, '//table[@class="table" and @border="1"]', timeout=5)
 
     titles = []
     ret = []

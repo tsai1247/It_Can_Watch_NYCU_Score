@@ -1,3 +1,4 @@
+import sys
 import threading
 from time import sleep
 import tkinter as tk
@@ -5,9 +6,13 @@ from It_Can_Watch_NYCU_Score import getScores
 
 
 def task():
-    titles, data = getScores(label)
+    data = getScores(label)
     if data is None:
+        sleep(1)
+        label.config(text=label.cget('text') + '\n請嘗試排除錯誤後重新執行此程式\n')
         return
+
+    titles, data = data
     sleep(0.2)
 
     label.grid_forget()
