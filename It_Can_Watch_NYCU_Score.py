@@ -21,7 +21,12 @@ def endYear():
 
 def getLoginInfomation():
     data = open('account', 'r', encoding='utf-8').readlines()
-    return data[0].strip(), data[1].strip()
+    try:
+        acnt, passwd = data[0].strip(), data[1].strip()
+    except:
+        return None, None
+        
+    return acnt, passwd
 
 def getScores(messageLabel: tk.Label = None):
     def find_element(by: str = By.ID, value: Tuple[str, None] = None, timeout: float = 10) -> WebElement:
@@ -40,10 +45,13 @@ def getScores(messageLabel: tk.Label = None):
 
     account, password = getLoginInfomation()
     if account is None or password is None:
-        log(f'請先填寫.env\n')
+        log(f'學號或密碼填寫錯誤\n')
+        open('account', 'w').write('')
         return None
+        
     elif(not account.isdecimal()):
         log(f'學號 {account} 並非正確的陽明交通大學學號\n')
+        open('account', 'w').write('')
         return None
     elif len(account) == 7:
         startyear = int(f'1{account[0:2]}')
@@ -51,6 +59,7 @@ def getScores(messageLabel: tk.Label = None):
         startyear = int(f'1{account[1:3]}')
     else:
         log(f'學號 {account} 並非正確的陽明交通大學學號\n')
+        open('account', 'w').write('')
         return None
 
     log('安裝最新版的chrome driver... ')
