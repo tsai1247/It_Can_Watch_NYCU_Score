@@ -8,10 +8,17 @@ from It_Can_Watch_NYCU_Score import getScores
 from os.path import isfile
 
 def task():
+    def retry():
+        restart_btn.grid_forget()
+        label.config(text='開始爬成績...\n')
+        threading.Thread(target=task).start()
+
     data = getScores(label)
     if data is None:
         sleep(1)
         label.config(text=label.cget('text') + '\n請嘗試排除錯誤後重新執行此程式\n')
+        restart_btn = tk.Button(window, text="重試", command=retry)
+        restart_btn.grid(row=1, column=0, padx=5, pady=5)
         return
 
     titles, data = data
